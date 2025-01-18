@@ -1,0 +1,44 @@
+// script.js
+
+document.addEventListener("DOMContentLoaded", () => {
+    const board = document.getElementById("ludo-board");
+    const rollDiceBtn = document.getElementById("roll-dice");
+    const diceValueDisplay = document.getElementById("dice-value");
+    const players = ["Red", "Blue", "Green", "Yellow"];
+    let currentPlayer = 0;
+
+    // Create the board dynamically
+    function createBoard() {
+        for (let i = 0; i < 15 * 15; i++) {
+            const square = document.createElement("div");
+            square.classList.add("square");
+
+            // Add home areas
+            if (i >= 0 && i < 40) {
+                square.classList.add("home");
+            }
+
+            // Add safe zones (example logic)
+            if ([8, 22, 36].includes(i % 15)) {
+                square.classList.add("safe-zone");
+            }
+
+            board.appendChild(square);
+        }
+    }
+
+    // Roll the dice
+    rollDiceBtn.addEventListener("click", () => {
+        const diceValue = Math.floor(Math.random() * 6) + 1;
+        diceValueDisplay.textContent = diceValue;
+
+        // Switch player after dice roll
+        const currentPlayerName = players[currentPlayer];
+        alert(`${currentPlayerName}'s Turn! Dice rolled: ${diceValue}`);
+
+        currentPlayer = (currentPlayer + 1) % players.length;
+    });
+
+    // Initialize the game
+    createBoard();
+});
